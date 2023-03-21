@@ -1,0 +1,21 @@
+﻿@namespace Framework.Authentication
+@inherits ComponentBase
+@attribute [PiralComponent]
+
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <Authorized>
+            @ChildContent
+        </Authorized>
+        <NotAuthorized>
+            <RedirectToLogin />
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@code{
+    #region props
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    #endregion
+}

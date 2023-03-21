@@ -1,0 +1,34 @@
+﻿@page "/login"
+@inherits ComponentBase
+@inject NavigationManager _navigationManager
+@inject IOptionsSnapshot<RemoteAuthenticationOptions<ApiAuthorizationProviderOptions>> _options
+
+<AuthorizeView>
+    <Authorized>
+        Hello, @context.User.Identity?.Name!<br />
+        <button class="nav-link btn btn-link" @onclick="BeginLogOut">Log out</button>
+    </Authorized>
+    <NotAuthorized>
+        <button @onclick=@Login>Log in</button>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    public void BeginLogOut()
+    {
+        _navigationManager.NavigateToLogout("authentication/logout");
+    }
+
+    void Login()
+    {
+        InteractiveRequestOptions requestOptions = new()
+        {
+            Interaction = InteractionType.SignIn,
+            ReturnUrl = _navigationManager.Uri,
+        };
+        _navigationManager.NavigateToLogin(
+            _options.Get(Microsoft.Extensions.Options.Options.DefaultName).AuthenticationPaths.LogInPath,
+            requestOptions
+        ); 
+    }
+}

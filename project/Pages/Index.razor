@@ -1,0 +1,22 @@
+﻿@page "/"
+@inject NavigationManager _navigationManager
+
+<h1>Default Page</h1>
+<p>Everybody can see me.</p>
+<a href="/secret">go to secret page</a><br /> 
+<a href="/cascading">go to cascading page</a>
+<br />
+<br />
+
+<AuthorizeView>
+    <Authorized>
+        <button @onclick="Logout">Logout</button>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    void Logout()
+    {
+        _navigationManager.NavigateToLogout("authentication/logout");
+    }
+}

@@ -3,6 +3,7 @@
 <AuthenticatedPage>
     <h1>Cascading Page</h1>
     <h2>Hello @_username</h2>
+    <h3>TestValue: @TestValue</h3>
     <p>Only authenticated users can see me.</p>
     <a href="/">go to default page</a>
 </AuthenticatedPage>
@@ -10,6 +11,9 @@
 @code{
     [CascadingParameter]
     private Task<AuthenticationState> authenticationState { get; set; }
+
+    [CascadingParameter(Name = "TestValue")]
+    private string TestValue { get; set; }
 
     string _username { get; set; }
 
